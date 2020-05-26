@@ -1,0 +1,105 @@
+.main {
+  display: inline;
+}
+
+.fp-nav {
+  width: 15%;
+  text-align: right;
+  float: left;
+}
+
+.sp-nav {
+  width: 15%;
+  text-align: left;
+  float: left;
+}
+
+.fp-board {
+  width: 35%;
+  float: left;
+}
+
+.sp-board {
+  width: 35%;
+  float: left;
+}
+
+h1 {
+  color: darkgray;
+  padding-top: 2%;
+  text-align: center;
+}
+
+span {
+  color: darkgray;
+}
+
+.board {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  color: #ffffff;
+}
+
+.emptyCell {
+  height: 50px;
+  width: 50px;
+  border: 1px solid darkgray;
+}
+
+.emptyCell2 {
+  height: 48px;
+  width: 48px;
+}
+
+.emptyCell:hover {
+  background-color: lighten(#1c1c1c, 25%);
+  cursor: pointer;
+}
+
+.emptyCell2:hover {
+  background-color: lighten(#1c1c1c, 25%);
+  cursor: pointer;
+}
+
+.cellContentS {
+  height: 48px;
+  width: 48px;
+  background-image: url("../../assets/cell-content-s.png");
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+.cellContentST {
+  height: 48px;
+  width: 48px;
+  background-image: url("../../assets/cell-content-t.png");
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+.cellContentP {
+  height: 48px;
+  width: 48px;
+  background-image: url("../../assets/cell-content-p.png");
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+.button-friends-field {
+  padding-left: 2%;
+}
+
+.nav-field {
+  text-align: center;
+}
+
+.button-field {
+  margin-top: 2%;
+  text-align: center;
+}
+
+.my-button {
+  color: lightgray;
+}

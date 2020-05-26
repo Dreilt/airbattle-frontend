@@ -1,0 +1,42 @@
+<mat-toolbar class="navbar-expand" color="primary">
+  <mat-toolbar-row>
+    <ul class="navbar-nav mr-auto">
+      <img src="../assets/logo.png" width="50" height="50">
+      <li class="nav-item" *ngIf="isLoggedIn || !isLoggedIn">
+        <a class="nav-link" [routerLink]="['']">AirBattle</a>
+      </li>
+      <li class="nav-item" *ngIf="isLoggedIn || !isLoggedIn">
+        <a class="nav-link" [routerLink]="['']">Graczy online: {{ usersOnline }}</a>
+      </li>
+      <li class="nav-item" *ngIf="isLoggedIn">
+        <a class="nav-link" [routerLink]="['/new_game']">Nowa gra</a>
+      </li>
+    </ul>
+
+    <ul class="navbar-nav ml-auto" *ngIf="!isLoggedIn">
+      <li class="nav-item">
+        <a class="nav-link" [routerLink]="['/login']">Logowanie</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" [routerLink]="['/registration']">Utwórz konto</a>
+      </li>
+    </ul>
+
+    <ul class="navbar-nav ml-auto" *ngIf="isLoggedIn">
+      <li class="nav-item" *ngIf="showAdminPanel">
+        <a class="nav-link" [routerLink]="['/users']">Panel administratora</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" [routerLink]="['/your_invitations']">Zaproszenia</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" [routerLink]="['/profile']">{{ userName }}</a>
+      </li>
+      <li class="nav-item">
+        <a href class="nav-link" (click)="logout()">Wyloguj</a>
+      </li>
+    </ul>
+  </mat-toolbar-row>
+</mat-toolbar>
+
+<router-outlet></router-outlet>

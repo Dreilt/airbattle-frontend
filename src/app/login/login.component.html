@@ -1,0 +1,50 @@
+<div class="container">
+  <div class="mat-elevation-z2 login-form">
+    <div class="text-center alert alert-danger" role="alert" *ngIf="isLoginFailed">
+      {{ errorMessage }}
+    </div>
+
+    <form *ngIf="!isLoggedIn" [formGroup]="loginForm" (ngSubmit)="loginForm.valid && onSubmit()" novalidate>
+      <h1>Logowanie</h1>
+
+      <mat-form-field hideRequiredMarker>
+        <mat-label style="color: gray;">Nazwa użytkownika</mat-label>
+        <input matInput style="color: gray;" formControlName="userName"/>
+        <mat-error *ngIf="userName.hasError('required')">Wpisz nazwę użytkownika</mat-error>
+      </mat-form-field>
+
+      <mat-form-field hideRequiredMarker>
+        <mat-label style="color: gray;">Hasło</mat-label>
+        <input matInput type="password" style="color: gray;" formControlName="password"/>
+        <mat-error *ngIf="password.hasError('required')">Wpisz hasło</mat-error>
+      </mat-form-field>
+
+      <mat-checkbox class="my_checkbox" formControlName="isRememberMe">
+        Zapamiętaj mnie
+      </mat-checkbox>
+
+      <div class="button-field">
+        <button mat-flat-button type="submit" class="my-button" color="primary">Zaloguj</button>
+      </div>
+
+      <div class="no_account_field">
+        Nie masz konta?
+        <a class="routerLink" style="text-decoration: none;" [routerLink]="['/registration']">Utwórz je!</a>
+      </div>
+
+      <div class="row icons-field">
+        <div class="icon-field">
+          <a class="nav-link" [href]="'https://github.com/Dreilt'"><img src="../../assets/github.png" width="50" height="50"></a>
+        </div>
+
+        <div class="icon-field">
+          <a class="nav-link" [href]="'https://www.linkedin.com/in/patryk-depka-108539192'"><img src="../../assets/linkedin.png" width="50" height="50"></a>
+        </div>
+
+        <div class="icon-field">
+          <a class="nav-link" [href]="'https://wsiz.rzeszow.pl/'"><img src="../../assets/wsiz.png" width="50" height="50"></a>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

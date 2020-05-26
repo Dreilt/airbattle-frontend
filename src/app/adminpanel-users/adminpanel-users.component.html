@@ -1,0 +1,58 @@
+<div class="container">
+  <div style="padding-top: 2%">
+    <div class="mat-elevation-z2 user-list-table">
+      <div class="text-center alert alert-success" role="alert" *ngIf="isChangeRoleSuccess || isBlockedUnblockedSuccess || isDeleteSuccess">
+        {{ successMessage }}
+      </div>
+      <h1>Użytkownicy</h1>
+      <mat-table [dataSource]="userList">
+        <ng-container matColumnDef="userName">
+          <mat-header-cell *matHeaderCellDef>Nazwa użytkownika</mat-header-cell>
+          <mat-cell *matCellDef="let user">{{user.userName}}</mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="email">
+          <mat-header-cell *matHeaderCellDef>Email</mat-header-cell>
+          <mat-cell *matCellDef="let user">{{user.email}}</mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="role">
+          <mat-header-cell *matHeaderCellDef [ngClass]="'role-column'">Rola</mat-header-cell>
+          <mat-cell *matCellDef="let user" [ngClass]="'role-column'">
+            <mat-select [(value)]="user.role.id" (selectionChange)="changeRole(user.id, $event.value)">
+              <mat-option [value]="1">Administrator</mat-option>
+              <mat-option [value]="2">Gracz</mat-option>
+            </mat-select>
+          </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="blocked">
+          <mat-header-cell *matHeaderCellDef [ngClass]="'lock-column'">Blokada</mat-header-cell>
+          <mat-cell *matCellDef="let user" [ngClass]="'lock-column'">
+
+            <mat-select *ngIf="user.role.id != 1" [(value)]="user.blocked" (selectionChange)="changeLock(user.id, $event.value)">
+              <mat-option [value]="0">Nie</mat-option>
+              <mat-option [value]="1">Tak</mat-option>
+            </mat-select>
+
+            <mat-select *ngIf="user.role.id == 1" disabled="disabled" [(value)]="user.blocked" (selectionChange)="changeLock(user.id, $event.value)">
+              <mat-option [value]="0">Nie</mat-option>
+              <mat-option [value]="1">Tak</mat-option>
+            </mat-select>
+          </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="action">
+          <mat-header-cell *matHeaderCellDef [ngClass]="'button-column'"></mat-header-cell>
+          <mat-cell *matCellDef="let user" [ngClass]="'button-column'">
+            <button *ngIf="user.role.id != 1" mat-raised-button color="primary" (click)="deleteUser(user.id)">Usuń użytkownika</button>
+            <button *ngIf="user.role.id == 1" disabled mat-raised-button color="primary" (click)="deleteUser(user.id)">Usuń użytkownika</button>
+          </mat-cell>
+        </ng-container>
+
+        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+        <mat-row *matRowDef="let row, columns: displayedColumns"></mat-row>
+      </mat-table>
+    </div>
+  </div>
+</div>

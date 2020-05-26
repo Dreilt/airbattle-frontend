@@ -1,0 +1,60 @@
+<div class="container">
+  <div class="mat-elevation-z2 userdata-password-form">
+    <div class="text-center alert alert-success" *ngIf="isSuccessfulUserData">
+      {{ successUserDataMessage }}
+    </div>
+    <div class="text-center alert alert-warning" *ngIf="isErrorUserData">
+      {{ errorUserDataMessage }}
+    </div>
+
+    <form [formGroup]="editUserDataForm" (ngSubmit)="editUserDataForm.valid && onSubmitChangeUserData()" novalidate>
+      <h1>Edytuj dane</h1>
+
+      <mat-form-field hideRequiredMarker>
+        <input matInput style="color: gray;" formControlName="userName" [(ngModel)]="currentUser.userName" [value]="currentUser.userName"/>
+        <mat-error *ngIf="userName.hasError('required')">Wpisz nazwę użytkownika</mat-error>
+        <mat-error *ngIf="userName.hasError('minlength')">Nazwa użytkownika musi mieć minimum 3 znaki</mat-error>
+      </mat-form-field>
+
+      <mat-form-field hideRequiredMarker>
+        <input matInput style="color: gray;" formControlName="email" [(ngModel)]="currentUser.email" [value]="currentUser.email"/>
+        <mat-error *ngIf="email.hasError('required')">Wpisz adres email</mat-error>
+        <mat-error *ngIf="email.hasError('pattern')">Adres email jest nieprawidłowy</mat-error>
+      </mat-form-field>
+
+      <div class="button-field">
+        <button mat-flat-button type="submit" class="my-button" color="primary">Potwierdź</button>
+      </div>
+    </form>
+  </div>
+  <div class="mat-elevation-z2 userdata-password-form">
+    <div class="text-center alert alert-success" *ngIf="isSuccessfulPassword">
+      {{ successChangePasswordMessage }}
+    </div>
+    <div class="text-center alert alert-warning" *ngIf="isErrorPassword">
+      {{ errorChangePasswordMessage }}
+    </div>
+
+    <form [formGroup]="changePasswordForm" (ngSubmit)="changePasswordForm.valid && onSubmitChangePassword()" novalidate>
+      <h1>Zmień hasło</h1>
+
+      <mat-form-field hideRequiredMarker>
+        <mat-label style="color: gray;">Nowe hasło</mat-label>
+        <input type="password" matInput style="color: gray;" formControlName="password" [(ngModel)]="currentUser.password"/>
+        <mat-error *ngIf="password.hasError('required')">Wpisz hasło</mat-error>
+        <mat-error *ngIf="password.hasError('minlength')">Hasło musi mieć minimum 6 znaków</mat-error>
+      </mat-form-field>
+
+      <mat-form-field hideRequiredMarker>
+        <mat-label style="color: gray;">Potwierdź nowe hasło</mat-label>
+        <input type="password" matInput style="color: gray;" formControlName="confirmPassword" compare="password"/>
+        <mat-error *ngIf="confirmPassword.hasError('required')">Wpisz ponownie hasło</mat-error>
+        <mat-error *ngIf="confirmPassword.hasError('compare')">Wpisane hasła różnią się od siebie</mat-error>
+      </mat-form-field>
+
+      <div class="button-field">
+        <button mat-flat-button type="submit" class="my-button" color="primary">Potwierdź</button>
+      </div>
+    </form>
+  </div>
+</div>

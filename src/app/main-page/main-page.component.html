@@ -1,0 +1,82 @@
+<div class="container">
+  <div *ngIf="!isLoggedIn">
+    <div class="unlogged-content">
+      <h1 style="font-weight: bold;">Gra przeglądarkowa Air Battle</h1>
+      <img src="../../assets/logo425.png" width="400" height="400">
+      <h1>Zarejestruj się i dołącz do gry!</h1>
+      <h2>Zmierz się z prawdziwymi graczami, lub poćwicz w trybie jednosobowym z komputerem</h2>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+  <div *ngIf="isLoggedIn">
+    <div class="chat">
+      <h1 style="text-align: center;">Shoutbox</h1>
+
+      <div class="messages">
+        <div *ngFor="let message of messageList">
+          <div class="message">
+            <div class="row">
+              <div class="username">
+                <span><b>{{message.user.userName}}:</b></span>
+              </div>
+              <div class="date">
+                <span><b>{{message.dateCreated | date: 'dd.MM.yyyy, HH:mm'}}</b></span>
+              </div>
+            </div>
+            <div class="row">
+              <div class="message-text">
+                {{message.textMessage}}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="chat-form">
+        <form [formGroup]="messageForm" (ngSubmit)="sendMessage()">
+          <div>
+            <mat-form-field>
+              <mat-label style="color: gray;">Napisz wiadomość...</mat-label>
+              <input matInput formControlName="message"/>
+              <button mat-flat-button matSuffix color="primary" class="my-button" (click)="clearInput()">Wyślij</button>
+            </mat-form-field>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <div class="mat-elevation-z2 game-list-table">
+      <h1>Dołącz do gry</h1>
+
+      <mat-table [dataSource]="gameAvailableList">
+
+        <ng-container matColumnDef="firstPlayer">
+          <mat-header-cell *matHeaderCellDef>Gracz</mat-header-cell>
+          <mat-cell *matCellDef="let game">{{game.firstPlayer.userName}}</mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="gameStatus">
+          <mat-header-cell *matHeaderCellDef>Status gry</mat-header-cell>
+          <mat-cell *matCellDef="let game">Oczekuje na drugiego gracza</mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="dateCreated">
+          <mat-header-cell *matHeaderCellDef>Data utworzenia</mat-header-cell>
+          <mat-cell *matCellDef="let game">{{game.dateCreated | date: 'dd.MM.yyyy HH:mm'}}</mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="actions">
+          <mat-header-cell *matHeaderCellDef [ngClass]="'button-column'"></mat-header-cell>
+          <mat-cell *matCellDef="let game" [ngClass]="'button-column'">
+            <button mat-raised-button color="primary" (click)="joinGame(game.id)">Dołącz</button>
+          </mat-cell>
+        </ng-container>
+
+        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+        <mat-row *matRowDef="let row, columns: displayedColumns"></mat-row>
+      </mat-table>
+    </div>
+  </div>
+</div>

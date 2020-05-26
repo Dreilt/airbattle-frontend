@@ -1,0 +1,28 @@
+<div class="container">
+  <div style="padding-top: 2%">
+    <div class="mat-elevation-z2 user-list-table">
+      <h1>Twoje zaproszenia</h1>
+      <mat-table [dataSource]="invitationList">
+        <ng-container matColumnDef="invitationFrom">
+          <mat-header-cell *matHeaderCellDef>Zaproszenie od</mat-header-cell>
+          <mat-cell *matCellDef="let invitation">{{invitation.invitationFrom.userName}}</mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="dateCreated">
+          <mat-header-cell *matHeaderCellDef>Data wysłania</mat-header-cell>
+          <mat-cell *matCellDef="let invitation">{{invitation.dateCreated | date: 'dd.MM.yyyy, HH:mm'}}</mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="action">
+          <mat-header-cell *matHeaderCellDef [ngClass]="'button-column'"></mat-header-cell>
+          <mat-cell *matCellDef="let invitation" [ngClass]="'button-column'">
+            <button mat-raised-button color="primary" (click)="acceptInvitation(invitation.invitationFrom.id)">Przyjmij</button>
+          </mat-cell>
+        </ng-container>
+
+        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+        <mat-row *matRowDef="let row, columns: displayedColumns"></mat-row>
+      </mat-table>
+    </div>
+  </div>
+</div>

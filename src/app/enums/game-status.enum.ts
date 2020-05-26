@@ -1,0 +1,6 @@
+export enum GameStatus {
+  WAITS_FOR_PLAYER,
+  DRAW_COORDINATES,
+  IN_PROGRESS,
+  GAME_FINISHED
+}

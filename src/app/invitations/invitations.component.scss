@@ -1,0 +1,41 @@
+.user-list-table {
+  background-color: #2c2c2c;
+}
+
+.mat-option {
+  color: lightgray;
+  background-color: #2c2c2c;
+}
+
+.mat-option.mat-selected {
+  background: darkgray !important;
+}
+
+.role-column {
+  flex: 0 0 20%;
+  justify-content: center;
+}
+
+.button-column {
+  flex: 0 0 25%;
+  justify-content: center;
+}
+
+h1 {
+  color: gray;
+  padding-top: 2%;
+  padding-left: 2%;
+}
+
+.mat-table {
+  color: lightgray;
+  background-color: #2c2c2c;
+}
+
+.mat-header-cell {
+  color: lightgray;
+}
+
+.mat-cell {
+  color: lightgray;
+}

@@ -1,0 +1,58 @@
+<div class="container">
+  <div class="mat-elevation-z2 register-form">
+    <div class="alert alert-warning" *ngIf="isSignUpFailed">
+      {{ errorMessage }}
+    </div>
+
+    <form *ngIf="!isSuccessful" [formGroup]="registerForm" (ngSubmit)="registerForm.valid && onSubmit()" novalidate>
+<!--    <form *ngIf="!isSuccessful" [formGroup]="registerForm" (ngSubmit)="onSubmit()" novalidate>-->
+      <h1>Utwórz konto</h1>
+
+      <mat-form-field hideRequiredMarker>
+        <mat-label style="color: gray;">Nazwa użytkownika</mat-label>
+        <input matInput style="color: gray;" formControlName="userName"/>
+        <mat-error *ngIf="userName.hasError('required')">Wpisz nazwę użytkownika</mat-error>
+        <mat-error *ngIf="userName.hasError('minlength')">Nazwa użytkownika musi mieć minimum 3 znaki</mat-error>
+      </mat-form-field>
+
+      <mat-form-field hideRequiredMarker>
+        <mat-label style="color: gray;">Email</mat-label>
+        <input matInput style="color: gray;" formControlName="email"/>
+        <mat-error *ngIf="email.hasError('required')">Wpisz adres email</mat-error>
+        <mat-error *ngIf="email.hasError('pattern')">Adres email jest nieprawidłowy</mat-error>
+      </mat-form-field>
+
+      <mat-form-field hideRequiredMarker>
+        <mat-label style="color: gray;">Hasło</mat-label>
+        <input matInput type="password" style="color: gray;" formControlName="password"/>
+        <mat-error *ngIf="password.hasError('required')">Wpisz hasło</mat-error>
+        <mat-error *ngIf="password.hasError('minlength')">Hasło musi mieć minimum 6 znaków</mat-error>
+      </mat-form-field>
+
+      <mat-form-field hideRequiredMarker>
+        <mat-label style="color: gray;">Powtórz hasło</mat-label>
+        <input type="password" matInput style="color: gray;" formControlName="confirmPassword" compare="password"/>
+        <mat-error *ngIf="confirmPassword.hasError('required')">Wpisz ponownie hasło</mat-error>
+        <mat-error *ngIf="confirmPassword.hasError('compare')">Wpisane hasła różnią się od siebie</mat-error>
+      </mat-form-field>
+
+      <div class="button-field">
+        <button mat-flat-button type="submit" class="my-button" color="primary">Utwórz konto</button>
+      </div>
+
+      <div class="row icons-field">
+        <div class="icon-field">
+          <a class="nav-link" [href]="'https://github.com/Dreilt'"><img src="../../assets/github.png" width="50" height="50"></a>
+        </div>
+
+        <div class="icon-field">
+          <a class="nav-link" [href]="'https://www.linkedin.com/in/patryk-depka-108539192'"><img src="../../assets/linkedin.png" width="50" height="50"></a>
+        </div>
+
+        <div class="icon-field">
+          <a class="nav-link" [href]="'https://wsiz.rzeszow.pl/'"><img src="../../assets/wsiz.png" width="50" height="50"></a>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

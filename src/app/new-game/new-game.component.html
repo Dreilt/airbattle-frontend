@@ -1,0 +1,110 @@
+<div class="container">
+  <div class="mat-elevation-z2 new-game-form">
+    <form [formGroup]="newGameForm" (ngSubmit)="newGameForm.valid && createNewGame()" novalidate>
+      <h1 class="h1-form">Utwórz nową grę</h1>
+
+      <mat-form-field>
+        <mat-label>Przeciwnik</mat-label>
+        <mat-select [(value)]="selectedEnemy" formControlName="enemy" [(ngModel)]="newGameData.enemy">
+          <mat-option *ngFor="let enemy of enemies" [value]="enemy.value">{{enemy.viewValue}}</mat-option>
+        </mat-select>
+        <mat-error *ngIf="enemy.hasError('required')">Wybierz przeciwnika</mat-error>
+      </mat-form-field>
+
+      <mat-form-field *ngIf="selectedEnemy == 'C'">
+        <mat-label>Poziom trudności</mat-label>
+        <mat-select formControlName="difficultyLevel" [(ngModel)]="newGameData.difficultyLevel">
+          <mat-option *ngFor="let difficultyLevel of difficultyLevels" [value]="difficultyLevel.value">{{difficultyLevel.viewValue}}</mat-option>
+        </mat-select>
+        <mat-error *ngIf="difficultyLevel.hasError('required')">Pole wymagane</mat-error>
+      </mat-form-field>
+
+      <div class="button-field">
+        <button type="submit" mat-raised-button color="primary" class="my-button">Utwórz</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<div class="tables">
+  <div class="mat-elevation-z2 game-list-table1">
+    <h1>Historia Twoich rozgrywek</h1>
+
+    <mat-table [dataSource]="userGameHistory">
+
+      <ng-container matColumnDef="enemy">
+        <mat-header-cell *matHeaderCellDef>Przeciwnik</mat-header-cell>
+        <mat-cell *matCellDef="let game">{{game.enemy}}</mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="difficultyLevel">
+        <mat-header-cell *matHeaderCellDef>Poziom trudności</mat-header-cell>
+        <mat-cell *matCellDef="let game">
+          <span *ngIf="game.difficultyLevel == 'E'">Łatwy</span>
+          <span *ngIf="game.difficultyLevel == 'M'">Średni</span>
+          <span *ngIf="game.difficultyLevel == 'H'">Trudny</span>
+          <span *ngIf="game.difficultyLevel == ''">-</span>
+        </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="dateCreated">
+        <mat-header-cell *matHeaderCellDef>Data</mat-header-cell>
+        <mat-cell *matCellDef="let game">{{game.dateCreated | date: 'dd.MM.yyyy HH:mm'}}</mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="status">
+        <mat-header-cell *matHeaderCellDef>Status</mat-header-cell>
+        <mat-cell *matCellDef="let game">
+          <span *ngIf="game.win == 'T'" style="color: green">Wygrana</span>
+          <span *ngIf="game.win == 'N'" style="color: red">Przegrana</span>
+        </mat-cell>
+      </ng-container>
+
+      <mat-header-row *matHeaderRowDef="displayedColumnsTable1"></mat-header-row>
+      <mat-row *matRowDef="let row, columns: displayedColumnsTable1"></mat-row>
+    </mat-table>
+  </div>
+
+  <div class="mat-elevation-z2 game-list-table2">
+    <h1>Historia rozgrywek Twoich znajomych</h1>
+
+    <mat-table [dataSource]="friendsGameHistory">
+
+      <ng-container matColumnDef="friend">
+        <mat-header-cell *matHeaderCellDef>Znajomy</mat-header-cell>
+        <mat-cell *matCellDef="let game">{{game.friend}}</mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="enemy">
+        <mat-header-cell *matHeaderCellDef>Przeciwnik</mat-header-cell>
+        <mat-cell *matCellDef="let game">{{game.enemy}}</mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="difficultyLevel">
+        <mat-header-cell *matHeaderCellDef>Poziom trudności</mat-header-cell>
+        <mat-cell *matCellDef="let game">
+          <span *ngIf="game.difficultyLevel == 'E'">Łatwy</span>
+          <span *ngIf="game.difficultyLevel == 'M'">Średni</span>
+          <span *ngIf="game.difficultyLevel == 'H'">Trudny</span>
+          <span *ngIf="game.difficultyLevel == ''">-</span>
+        </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="dateCreated">
+        <mat-header-cell *matHeaderCellDef>Data</mat-header-cell>
+        <mat-cell *matCellDef="let game">{{game.dateCreated | date: 'dd.MM.yyyy HH:mm'}}</mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="status">
+        <mat-header-cell *matHeaderCellDef>Status</mat-header-cell>
+        <mat-cell *matCellDef="let game">
+          <span *ngIf="game.win == 'T'" style="color: green">Wygrana</span>
+          <span *ngIf="game.win == 'N'" style="color: red">Przegrana</span>
+        </mat-cell>
+      </ng-container>
+
+      <mat-header-row *matHeaderRowDef="displayedColumnsTable2"></mat-header-row>
+      <mat-row *matRowDef="let row, columns: displayedColumnsTable2"></mat-row>
+    </mat-table>
+  </div>
+</div>

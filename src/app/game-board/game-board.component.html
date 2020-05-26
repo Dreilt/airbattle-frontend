@@ -1,0 +1,144 @@
+<h1>{{gameStatusMessage}}</h1>
+
+<div class="main">
+  <div class="fp-nav">
+    <div class="nav-field">
+      <h1 style="font-weight: bold;">{{game.firstPlayer.userName}}</h1>
+
+      <div *ngIf="game.gameStatus == 'DRAW_COORDINATES'">
+        <div class="button-field" *ngIf="userLogged.id == game.firstPlayer.id && (game.firstPlayerStatus == 'JTG' || game.firstPlayerStatus == 'SC')">
+          <button mat-raised-button color="primary" class="my-button" (click)="drawCoordinatesPlanes(firstPlayerBoard)">Losuj pozycje samolotów</button>
+        </div>
+        <div class="button-field" *ngIf="userLogged.id == game.firstPlayer.id && game.firstPlayerStatus == 'SC'">
+          <button mat-raised-button color="primary" class="my-button" (click)="playGame(firstPlayerBoard)">Graj</button>
+        </div>
+      </div>
+
+      <div *ngIf="game.gameStatus == 'IN_PROGRESS' || game.gameStatus == 'GAME_FINISHED'">
+        <span *ngIf="userLogged.id == game.firstPlayer.id">Stracone samoloty:<br/></span>
+        <span *ngIf="userLogged.id != game.firstPlayer.id">Zestrzelone samoloty:<br/></span>
+        <span *ngIf="!isTroopCarrierPlaneFP">Transportowiec<br/></span>
+        <span *ngIf="!isBomberPlaneFP">Bombowiec<br/></span>
+        <span *ngIf="!isFighterPlaneFP">Myśliwiec<br/></span>
+        <span *ngIf="!isHelicopterFP">Helikopter<br/></span>
+        <span *ngIf="!isReconnaissanceAircraftFP">Samolot rozpoznawczy<br/></span>
+      </div>
+    </div>
+  </div>
+
+  <div class="fp-board">
+    <div *ngIf="game.secondPlayer == null && game.enemy == 'P'">
+      <div class="board" *ngFor="let row of [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]">
+        <div *ngFor="let column of [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]" class="emptyCell"></div>
+      </div>
+    </div>
+
+    <div *ngIf="game.secondPlayer != null || game.enemy == 'C'">
+      <div class="board" *ngFor="let row of [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]">
+        <div *ngFor="let column of [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]" class="emptyCell" (click)="secondPlayerMove(row, column)">
+          <!--              <div *ngIf="firstPlayerBoard[row][column] == 'T'" class="cellContentS"></div>-->
+          <!--              <div *ngIf="firstPlayerBoard[row][column] == 'B'" class="cellContentS"></div>-->
+          <!--              <div *ngIf="firstPlayerBoard[row][column] == 'M'" class="cellContentS"></div>-->
+          <!--              <div *ngIf="firstPlayerBoard[row][column] == 'H'" class="cellContentS"></div>-->
+          <!--              <div *ngIf="firstPlayerBoard[row][column] == 'SR'" class="cellContentS"></div>-->
+
+          <div *ngIf="userLogged.id == game.firstPlayer.id &&
+              (firstPlayerBoard[row][column] == 'T' ||
+               firstPlayerBoard[row][column] == 'B' ||
+               firstPlayerBoard[row][column] == 'M' ||
+               firstPlayerBoard[row][column] == 'H' ||
+               firstPlayerBoard[row][column] == 'SR')" class="cellContentS"></div>
+
+          <div *ngIf="userLogged.id != game.firstPlayer.id &&
+              (firstPlayerBoard[row][column] == 'T' ||
+               firstPlayerBoard[row][column] == 'B' ||
+               firstPlayerBoard[row][column] == 'M' ||
+               firstPlayerBoard[row][column] == 'H' ||
+               firstPlayerBoard[row][column] == 'SR')" class="emptyCell2"></div>
+
+          <div *ngIf="firstPlayerBoard[row][column] == 'ST'" class="cellContentST"></div>
+          <div *ngIf="firstPlayerBoard[row][column] == 'P'" class="cellContentP"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="button-field" *ngIf="isFriend == 0 && userLogged.id != game.firstPlayer.id">
+      <a mat-raised-button color="primary" class="my-button" (click)="sendInvitation(game.firstPlayer.id)">Zaproś do znajomych</a>
+    </div>
+  </div>
+
+  <div class="sp-board">
+    <div *ngIf="game.secondPlayer == null && game.enemy == 'P'">
+      <div class="board" *ngFor="let row of [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]">
+        <div *ngFor="let column of [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]" class="emptyCell"></div>
+      </div>
+    </div>
+
+    <div *ngIf="game.secondPlayer != null || game.enemy == 'C'">
+      <div class="board" *ngFor="let row of [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]">
+        <div *ngFor="let column of [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]" class="emptyCell" (click)="firstPlayerMove(row, column)">
+          <!--              <div *ngIf="secondPlayerBoard[row][column] == 'T'" class="cellContentS"></div>-->
+          <!--              <div *ngIf="secondPlayerBoard[row][column] == 'B'" class="cellContentS"></div>-->
+          <!--              <div *ngIf="secondPlayerBoard[row][column] == 'M'" class="cellContentS"></div>-->
+          <!--              <div *ngIf="secondPlayerBoard[row][column] == 'H'" class="cellContentS"></div>-->
+          <!--              <div *ngIf="secondPlayerBoard[row][column] == 'SR'" class="cellContentS"></div>-->
+
+          <div *ngIf="game.secondPlayer != null && userLogged.id == game.secondPlayer.id &&
+              (secondPlayerBoard[row][column] == 'T' ||
+               secondPlayerBoard[row][column] == 'B' ||
+               secondPlayerBoard[row][column] == 'M' ||
+               secondPlayerBoard[row][column] == 'H' ||
+               secondPlayerBoard[row][column] == 'SR')" class="cellContentS"></div>
+
+          <div *ngIf="game.secondPlayer != null && userLogged.id != game.secondPlayer.id &&
+              (secondPlayerBoard[row][column] == 'T' ||
+               secondPlayerBoard[row][column] == 'B' ||
+               secondPlayerBoard[row][column] == 'M' ||
+               secondPlayerBoard[row][column] == 'H' ||
+               secondPlayerBoard[row][column] == 'SR')" class="emptyCell2"></div>
+
+          <div *ngIf="game.secondPlayer == null &&
+              (secondPlayerBoard[row][column] == 'T' ||
+               secondPlayerBoard[row][column] == 'B' ||
+               secondPlayerBoard[row][column] == 'M' ||
+               secondPlayerBoard[row][column] == 'H' ||
+               secondPlayerBoard[row][column] == 'SR')" class="emptyCell2"></div>
+
+          <div *ngIf="secondPlayerBoard[row][column] == 'ST'" class="cellContentST"></div>
+          <div *ngIf="secondPlayerBoard[row][column] == 'P'" class="cellContentP"></div>
+        </div>
+      </div>
+
+      <div class="button-field" *ngIf="isFriend == 0 && game.secondPlayer != null && userLogged.id != game.secondPlayer.id">
+        <a mat-raised-button color="primary" class="my-button" (click)="sendInvitation(game.secondPlayer.id)">Zaproś do znajomych</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="sp-nav">
+    <div class="nav-field">
+      <h1 style="font-weight: bold;" *ngIf="game.secondPlayer == null && game.enemy == 'P'">?</h1>
+      <h1 style="font-weight: bold;" *ngIf="game.secondPlayer == null && game.enemy == 'C'">Komputer</h1>
+      <h1 style="font-weight: bold;" *ngIf="game.secondPlayer != null">{{game.secondPlayer.userName}}</h1>
+
+      <div *ngIf="game.gameStatus == 'DRAW_COORDINATES'">
+        <div class="button-field" *ngIf="userLogged.id == game.secondPlayer.id && (game.secondPlayerStatus == 'JTG' || game.secondPlayerStatus == 'SC')">
+          <button mat-raised-button color="primary" class="my-button" (click)="drawCoordinatesPlanes(secondPlayerBoard)">Losuj pozycje samolotów</button>
+        </div>
+        <div class="button-field" *ngIf="userLogged.id == game.secondPlayer.id && game.secondPlayerStatus == 'SC'">
+          <button mat-raised-button color="primary" class="my-button" (click)="playGame(secondPlayerBoard)">Graj</button>
+        </div>
+      </div>
+
+      <div *ngIf="game.gameStatus == 'IN_PROGRESS' || game.gameStatus == 'GAME_FINISHED'">
+        <span *ngIf="game.secondPlayer != null && userLogged.id == game.secondPlayer.id">Stracone samoloty:<br/></span>
+        <span *ngIf="game.secondPlayer == null || (game.secondPlayer != null && userLogged.id != game.secondPlayer.id)">Zestrzelone samoloty:<br/></span>
+        <span *ngIf="!isTroopCarrierPlaneSP">Transportowiec<br/></span>
+        <span *ngIf="!isBomberPlaneSP">Bombowiec<br/></span>
+        <span *ngIf="!isFighterPlaneSP">Myśliwiec<br/></span>
+        <span *ngIf="!isHelicopterSP">Helikopter<br/></span>
+        <span *ngIf="!isReconnaissanceAircraftSP">Samolot rozpoznawczy<br/></span>
+      </div>
+    </div>
+  </div>
+</div>

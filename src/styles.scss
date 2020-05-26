@@ -1,0 +1,29 @@
+@import '~@angular/material/theming';
+
+@include mat-core();
+$airbattle-frontend-primary: mat-palette($mat-blue, 500);
+$airbattle-frontend-accent: mat-palette($mat-pink, A200, A100, A400);
+$airbattle-frontend-warn: mat-palette($mat-red);
+$airbattle-frontend-theme: mat-light-theme($airbattle-frontend-primary, $airbattle-frontend-accent, $airbattle-frontend-warn);
+@include angular-material-theme($airbattle-frontend-theme);
+
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; background-color: #1c1c1c; }
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+select:-webkit-autofill,
+select:-webkit-autofill:hover,
+select:-webkit-autofill:focus,
+textarea:-webkit-autofill,
+textarea:-webkit-autofill:hover,
+textarea:-webkit-autofill:focus {
+  -webkit-text-fill-color: gray;
+  transition: background-color 5000s ease-in-out 0s;
+}
+
+.mat-select-value-text {
+  color: lightgray;
+}
